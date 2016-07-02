@@ -1,0 +1,32 @@
+{
+  "author": {
+    "name": "Patrik Simek",
+    "url": "https://www.integromat.com"
+  },
+  "name": "imt-gateway",
+  "description": "Integromat Gateway Client",
+  "keywords": [
+    "integromat",
+    "gateway",
+    "imt"
+  ],
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/integromat/imt-gateway"
+  },
+  "dependencies": {
+    "debug": "^2.2.0",
+    "msgpack-lite": "^0.1.20"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=4.0"
+  },
+  "scripts": {
+    "test": "mocha test"
+  }
+}

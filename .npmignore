@@ -1,0 +1,8 @@
+.gitignore
+.npmignore
+.travis.yml
+docs/*
+test/*
+_site/*
+certs/*
+!certs/gateway.integromat.com.*

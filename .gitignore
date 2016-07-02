@@ -1,0 +1,5 @@
+node_modules/*
+docs/*
+_site/*
+certs/*
+!certs/gateway.integromat.com.*

@@ -114,7 +114,7 @@ Events are messages sent from client to the server.
 let event = new Event(type, data);
 ```
 
-**IMPORTANT:** Client muset alway wait for `drain` event before it can send events to the server.
+**IMPORTANT:** Client muset always wait for `drain` event before it can send events to the server.
 
 **Arguments**
 
@@ -134,7 +134,7 @@ gw.on('action', (action, ack) => {
 })
 ```
 
-**IMPORTANT:** Server always wait for the acknowledgement before it send another action to the client.
+**IMPORTANT:** Server always wait for the acknowledgement before it sends another action to the client.
 
 ## License
 

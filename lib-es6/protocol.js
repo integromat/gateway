@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('imt:gateway:protocol');
-const {EventEmitter} = require('events');
+const EventEmitter = require('events');
 const msgpack = require('msgpack-lite');
 const os = require('os');
 const tls = require('tls');

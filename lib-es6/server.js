@@ -1,7 +1,8 @@
 'use strict'
 
-const {EventEmitter} = require('events');
-const {TOKEN, Protocol} = require('./protocol.js');
+const EventEmitter = require('events');
+const TOKEN = require('./protocol.js').TOKEN;
+const Protocol = require('./protocol.js').Protocol;
 const debug = require('debug')('imt:gateway:server');
 
 const TOKEN_TO_STRING = {};

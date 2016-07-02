@@ -1,7 +1,9 @@
 'use strict'
 
 const assert = require('assert');
-const {Server, Client, Event} = require('..');
+const Server = require('..').Server;
+const Client = require('..').Client;
+const Event = require('..').Event;
 
 describe('Gateway Local', () => {
 	let server;

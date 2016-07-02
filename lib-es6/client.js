@@ -2,8 +2,9 @@
 
 const fs = require('fs');
 const debug = require('debug')('imt:gateway:client');
-const {EventEmitter} = require('events');
-const {TOKEN, Protocol} = require('./protocol.js');
+const EventEmitter = require('events');
+const TOKEN = require('./protocol.js').TOKEN;
+const Protocol = require('./protocol.js').Protocol;
 const Action = require('./action.js');
 const Event = require('./event.js');
 

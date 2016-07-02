@@ -12,7 +12,8 @@ const RECONNECT_TIMEOUT = 1000;
 const TOKEN_TO_STRING = {};
 for (let name in TOKEN) TOKEN_TO_STRING[TOKEN[name]] = name.toLowerCase();
 
-const defer = (cb, err = null, klass = Error) => {
+const defer = (cb, err, klass) => {
+	klass = klass || Error;
 	if (err && !(err instanceof Error)) err = new klass(err);
 	if ('function' != typeof cb) throw err;
 	return setImmediate(cb, err);

@@ -5,9 +5,9 @@
  */
 
 class Event {
-	constructor(type, bundle = null) {
+	constructor(type, bundle) {
 		this.type = type;
-		this.bundle = bundle;
+		this.bundle = bundle || null;
 	}
 }
 

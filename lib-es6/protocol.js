@@ -220,7 +220,7 @@ class Protocol extends EventEmitter {
 		if (data != null) {
 			try {
 				var body = msgpack.encode(data);
-				var {length} = body;
+				var length = body.length;
 			} catch (e) {
 				if (token === TOKEN.BYE) {
 					return console.error(new Error(`Failed to serialize packet. ${e.message}`));

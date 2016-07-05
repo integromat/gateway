@@ -57,7 +57,40 @@ describe('Gateway Local', () => {
 			host: 'localhost'
 		})
 		
+		client.send(new Event('test', DATA));
+
+		client.on('action', (action, ack) => {
+			assert.strictEqual(action.type, 'test');
+			assert.deepStrictEqual(action.parameters, DATA);
+			ack();
+			
+			client.close()
+		})
+		
+		client.on('disconnect', () => {
+			done();
+		})
+		
+		client.connect();
+	})
+	
+	it('should send many actions at once', (done) => {
+		const DATA = {a: 'b', c: 777};
+		
+		let i = 0, client = new Client({
+			host: 'localhost'
+		})
+		
 		client.on('drain', () => {
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
+			client.send(new Event('test', DATA));
 			client.send(new Event('test', DATA));
 		})
 		
@@ -66,7 +99,7 @@ describe('Gateway Local', () => {
 			assert.deepStrictEqual(action.parameters, DATA);
 			ack();
 			
-			client.close()
+			if (++i === 10) client.close()
 		})
 		
 		client.on('disconnect', () => {

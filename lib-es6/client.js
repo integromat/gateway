@@ -7,6 +7,7 @@ const TOKEN = require('./protocol.js').TOKEN;
 const Protocol = require('./protocol.js').Protocol;
 const Action = require('./action.js');
 const Event = require('./event.js');
+const queue = require('async/queue');
 
 const RECONNECT_TIMEOUT = 1000;
 const TOKEN_TO_STRING = {};
@@ -64,6 +65,24 @@ class Client extends EventEmitter {
 		this._connect = this._connect.bind(this);
 		this._data = this._data.bind(this);
 		this._error = this._error.bind(this);
+		
+		this._queue = queue((event, callback) => {
+			let packet = {
+				id: event.id,
+				type: event.type,
+				bundle: event.bundle
+			};
+			
+			this._protocol.send(TOKEN.EVENT, packet);
+			
+			this._waitingForAcknowledgement = {
+				packet,
+				callback
+			};
+	
+			debug(`outgoing, token: 'event', id: '${packet.id}', data:`, event.data);
+		}, 1);
+		this._queue.pause();
 	}
 	
 	/**
@@ -75,6 +94,7 @@ class Client extends EventEmitter {
 	_close() {
 		let wasAuthorized = this._protocol.authorized;
 		this._protocol = null;
+		this._queue.pause();
 		
 		debug('connection closed');
 		
@@ -139,6 +159,7 @@ class Client extends EventEmitter {
 				break;
 
 			case TOKEN.DRAINED:
+				this._queue.resume();
 				this.emit('drain');
 				break;
 			
@@ -289,7 +310,7 @@ class Client extends EventEmitter {
 	}
 	
 	/**
-	 * Send event to the server.
+	 * Send event to the server. Message is automatically queued when connection is not yet established or when another event was not yet processed.
 	 * 
 	 * @param {Event} event Event.
 	 * @param {Function} [callback] Callback to call when acknowledgment is received.
@@ -302,27 +323,9 @@ class Client extends EventEmitter {
 		if ('string' !== typeof event.type) return defer(callback, 'Invalid event type.');
 		if (event.type === '') return defer(callback, 'Event type not specified.');
 		if (event.bundle != null && 'object' !== typeof event.bundle) return defer(callback, 'Invalid event bundle.');
-		
-		// TODO: Offline queue
-		
-		if (this._waitingForAcknowledgement != null) {
-			return defer(callback, 'There\'s already an event to send in the queue.');
-		}
-		
-		let packet = {
-			id: Date.now(),
-			type: event.type,
-			bundle: event.bundle
-		};
-		
-		this._protocol.send(TOKEN.EVENT, packet);
-		
-		this._waitingForAcknowledgement = {
-			packet,
-			callback
-		};
 
-		debug(`outgoing, token: 'event', id: '${packet.id}', data:`, event.data);
+		if (event.id == null) event.id = Date.now();
+		this._queue.push(event);
 		return this;
 	}
 }

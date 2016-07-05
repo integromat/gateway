@@ -86,7 +86,7 @@ gw.close();
 
 ### send(event, [callback])
 
-Send new event to the server.
+Send new event to the server. Message is automatically queued when connection is not yet established or when another event was not yet processed.
 
 **Arguments**
 

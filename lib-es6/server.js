@@ -4,6 +4,7 @@ const EventEmitter = require('events');
 const TOKEN = require('./protocol.js').TOKEN;
 const Protocol = require('./protocol.js').Protocol;
 const debug = require('debug')('imt:gateway:server');
+const queue = require('async/queue');
 
 const TOKEN_TO_STRING = {};
 for (let name in TOKEN) TOKEN_TO_STRING[TOKEN[name]] = name.toLowerCase();
@@ -20,6 +21,12 @@ class Server extends EventEmitter {
 		this._server = require('net').createServer((socket) => {
 			let ip = socket.remoteAddress;
 			debug('client conntected', ip);
+			
+			let q = queue((event, next) => {
+				protocol.send(TOKEN.ACTION, event);
+				q.pause();
+				next();
+			});
 			
 			let protocol = new Protocol(socket);
 			this._connections.push(protocol);
@@ -39,12 +46,16 @@ class Server extends EventEmitter {
 						})
 						
 						// Loopback
-						protocol.send(TOKEN.ACTION, {
+						q.push({
 							id: Date.now(),
 							type: data.type,
 							parameters: data.bundle
-						});
+						})
 						
+						break;
+					
+					case TOKEN.ACKNOWLEDGEMENT:
+						q.resume();
 						break;
 				}
 			})

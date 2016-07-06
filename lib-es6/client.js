@@ -66,7 +66,7 @@ class Client extends EventEmitter {
 		this._data = this._data.bind(this);
 		this._error = this._error.bind(this);
 		
-		this._queue = queue((event, callback) => {
+		this._queue = queue((event, next) => {
 			let packet = {
 				id: event.id,
 				type: event.type,
@@ -77,7 +77,10 @@ class Client extends EventEmitter {
 			
 			this._waitingForAcknowledgement = {
 				packet,
-				callback
+				callback: (err) => {
+					if ('function' === typeof event.callback) event.callback(err);
+					next();
+				}
 			};
 	
 			debug(`outgoing, token: 'event', id: '${packet.id}', data:`, event.data);
@@ -323,7 +326,8 @@ class Client extends EventEmitter {
 		if ('string' !== typeof event.type) return defer(callback, 'Invalid event type.');
 		if (event.type === '') return defer(callback, 'Event type not specified.');
 		if (event.bundle != null && 'object' !== typeof event.bundle) return defer(callback, 'Invalid event bundle.');
-
+		
+		event.callback = callback;
 		if (event.id == null) event.id = Date.now();
 		this._queue.push(event);
 		return this;

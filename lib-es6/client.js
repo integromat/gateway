@@ -83,7 +83,7 @@ class Client extends EventEmitter {
 				}
 			};
 	
-			debug(`outgoing, token: 'event', id: '${packet.id}', data:`, event.data);
+			debug(`outgoing, token: 'event', id: '${packet.id}', data:`, event.bundle);
 		}, 1);
 		this._queue.pause();
 	}

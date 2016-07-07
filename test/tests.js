@@ -118,7 +118,8 @@ describe.skip('Gateway Production', () => {
 	it('should connect to the server', (done) => {
 		let client = new Client({
 			key: require('fs').readFileSync(`${__dirname}/../certs/client.key`),
-			cert: require('fs').readFileSync(`${__dirname}/../certs/client.pem`)
+			cert: require('fs').readFileSync(`${__dirname}/../certs/client.pem`),
+			autoReconnect: false
 		})
 		
 		client.on('drain', () => {

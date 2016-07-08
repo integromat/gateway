@@ -167,7 +167,7 @@ class Client extends EventEmitter {
 				break;
 			
 			case TOKEN.ACTION:
-				this.emit('action', new Action(data.type, data.parameters), (err) => {
+				this.emit('action', new Action(data.id, data.type, data.parameters), (err) => {
 					if (!this._protocol) return;
 					
 					let res = {

@@ -41,7 +41,7 @@ gw.connect();
 
 TBD
 
-## Client
+## Client
 
 Client is an EventEmitter.
 
@@ -106,7 +106,7 @@ gw.send(event, (err) => {
 });
 ```
 
-## Event
+## Event
 
 Events are messages sent from client to the server.
 
@@ -121,7 +121,7 @@ let event = new Event(type, data);
 - `type` - Type of an event.
 - `data` - An object containing data to be transfered to the server.
 
-## Action
+## Action
 
 Actions are messages sent from the server to client.
 
@@ -138,7 +138,7 @@ gw.on('action', (action, ack) => {
 
 ## License
 
-Copyright (c) 2016 Integromat
+Copyright (c) 2020 Integromat
 
 The MIT License
 
@@ -150,5 +150,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 [npm-image]: https://img.shields.io/npm/v/imt-gateway.svg?style=flat-square
 [npm-url]: https://www.npmjs.com/package/imt-gateway
-[travis-image]: https://img.shields.io/travis/integromat/imt-gateway/master.svg?style=flat-square&label=unit
-[travis-url]: https://travis-ci.org/integromat/imt-gateway
+[travis-image]: https://img.shields.io/travis/integromat/gateway/master.svg?style=flat-square&label=unit
+[travis-url]: https://travis-ci.org/integromat/gateway

@@ -10,11 +10,11 @@
     "gateway",
     "imt"
   ],
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/integromat/imt-gateway"
+    "url": "https://github.com/integromat/gateway"
   },
   "license": "MIT",
   "dependencies": {

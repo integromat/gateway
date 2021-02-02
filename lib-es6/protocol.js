@@ -43,7 +43,7 @@ class Protocol extends EventEmitter {
 		this._error = this._error.bind(this);
 		this._connect = this._connect.bind(this);
 		
-		this.buffer = new Buffer(0);
+		this.buffer = Buffer.alloc(0);
 		
 		this.socket = socket;
 		this.socket.on('data', this._data);
@@ -232,7 +232,7 @@ class Protocol extends EventEmitter {
 			var length = 0;
 		}
 
-		let packet = new Buffer(HEADER_LENGTH + length);
+		let packet = Buffer.alloc(HEADER_LENGTH + length);
 		packet.writeUInt8(token, 0);
 		packet.writeUInt8(0x00, 1);
 		packet.writeUInt32LE(length, 2);

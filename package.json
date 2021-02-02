@@ -10,7 +10,7 @@
     "gateway",
     "imt"
   ],
-  "version": "1.0.5",
+  "version": "1.1.0",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "dependencies": {
     "async": "^3.2.0",
     "debug": "^4.1.1",
-    "msgpack-lite": "^0.1.26"
+    "msgpack-lite": "^0.1.26",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "mocha": "^7.1.1"

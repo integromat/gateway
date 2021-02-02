@@ -8,6 +8,7 @@ const Protocol = require('./protocol.js').Protocol;
 const Action = require('./action.js');
 const Event = require('./event.js');
 const queue = require('async/queue');
+const uuid = require('uuid');
 
 const RECONNECT_TIMEOUT = 1000;
 const TOKEN_TO_STRING = {};
@@ -256,7 +257,11 @@ class Client extends EventEmitter {
 		if (this._secure) {
 			config.key = this._options.key;
 			config.cert = this._options.cert;
-			config.ca = [fs.readFileSync(`${__dirname}/../certs/${config.host}.root.ca.pem`), fs.readFileSync(`${__dirname}/../certs/${config.host}.intermediate.ca.pem`)];
+			const host = new URL(`https://${config.host}`);
+			config.ca = [
+				this._options.ca.root || fs.readFileSync(`${__dirname}/../certs/${host.hostname}.root.ca.pem`),
+				this._options.ca.intermediate || fs.readFileSync(`${__dirname}/../certs/${host.hostname}.intermediate.ca.pem`)
+			];
 		}
 		
 		let socket = require(this._secure ? 'tls' : 'net').connect(config);
@@ -328,7 +333,7 @@ class Client extends EventEmitter {
 		if (event.bundle != null && 'object' !== typeof event.bundle) return defer(callback, 'Invalid event bundle.');
 		
 		event.callback = callback;
-		if (event.id == null) event.id = Date.now();
+		if (event.id == null) event.id = uuid.v4().replace(/-/g,'').toUpperCase();
 		this._queue.push(event);
 		return this;
 	}

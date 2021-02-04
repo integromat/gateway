@@ -333,7 +333,7 @@ class Client extends EventEmitter {
 		if (event.bundle != null && 'object' !== typeof event.bundle) return defer(callback, 'Invalid event bundle.');
 		
 		event.callback = callback;
-		if (event.id == null) event.id = uuid.v4().replace(/-/g,'').toUpperCase();
+		if (event.id == null) event.id = uuid.v4().replace(/-/g,'');
 		this._queue.push(event);
 		return this;
 	}

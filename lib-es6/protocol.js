@@ -177,6 +177,7 @@ class Protocol extends EventEmitter {
 	_error(err) {
 		this.closing = true;
 		
+		console.error(`[ PROTOCOL ERROR ]`, err);
 		this.emit('error', err);
 		if (this.socket) this.socket.destroy();
 		// don't this.destroy() here, it will be destroyed on the 'close' event

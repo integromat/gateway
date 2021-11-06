@@ -10,7 +10,8 @@
     "gateway",
     "imt"
   ],
-  "version": "2.0.2",
+  "types": "types/index.d.ts",
+  "version": "2.0.3",
   "main": "index.js",
   "repository": {
     "type": "git",

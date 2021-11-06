@@ -4,3 +4,5 @@ _site/*
 certs/*
 !certs/gateway.integromat.com.*
 .vscode
+.idea
+.DS_Store

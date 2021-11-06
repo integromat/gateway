@@ -20,7 +20,7 @@ export type TClient = {
 	on(event: 'connect', listener: () => void): void;
 	on(event: 'disconnect', listener: () => void): void;
 	on(event: 'drain', listener: () => void): void;
-	on(event: 'action', listener: (action: TAction) => void): void;
+	on(event: 'action', listener: (action: TAction, ack: (err?: Error) => void) => void): void;
 
 	new(options: TClientOptions): TClient;
 	connect(): void;

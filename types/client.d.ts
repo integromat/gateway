@@ -8,6 +8,10 @@ type TClientOptions = {
 	cert: string;
 	autoReconnect?: boolean;
 	maxReconnectAttempts?: number;
+	ca?: {
+		root?: string;
+		intermediate?: string;
+	}
 }
 
 export type TClient = {

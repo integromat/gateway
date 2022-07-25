@@ -4,6 +4,6 @@ export type TEvent = {
 	type: string;
 	bundle?: unknown;
 
-	new(type: string, bundle?: unknown): TEvent;
+	new(type: string, bundle?: unknown, id?: string): TEvent;
 
 };

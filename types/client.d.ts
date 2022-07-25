@@ -1,5 +1,6 @@
 import {TEvent} from './event';
 import {TAction} from './action';
+import {EventEmitter} from 'events';
 
 type TClientOptions = {
 	host?: string;
@@ -14,7 +15,7 @@ type TClientOptions = {
 	}
 }
 
-export type TClient = {
+export type TClient = EventEmitter & {
 
 	on(event: 'error', listener: (err: Error) => void): void;
 	on(event: 'connect', listener: () => void): void;

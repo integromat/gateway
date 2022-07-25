@@ -196,6 +196,7 @@ class Client extends EventEmitter {
 					return this._protocol.socket.destroy(); // Interrupt connection immediately.
 				}
 
+				this.emit('acknowledgement');
 				let cb = this._waitingForAcknowledgement.callback;
 				this._waitingForAcknowledgement = null;
 

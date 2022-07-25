@@ -1,5 +1,6 @@
 export type TEvent = {
 
+	id?: string;
 	type: string;
 	bundle?: unknown;
 
